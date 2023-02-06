@@ -20,18 +20,17 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-     /**
-      * @return Question[] Returns an array of Question objects
-      */
-    public function findAllAskedOrderedByNewest()
+    /**
+     * @return QueryBuilder
+     */
+    public function createAskedOrderedByNewestQueryBuilder(): QueryBuilder
     {
         return $this->addIsAskedQueryBuilder()
             ->orderBy('q.askedAt', 'DESC')
-            ->leftJoin('q.tags', 'tag')
-            ->addSelect('tag')
-            ->getQuery()
-            ->getResult()
-        ;
+            ->leftJoin('q.questionTags', 'qtag')
+            ->addSelect('qtag')
+            ->leftJoin('qtag.tag', 'tag')
+            ->addSelect('tag');
     }
 
     private function addIsAskedQueryBuilder(QueryBuilder $qb = null): QueryBuilder

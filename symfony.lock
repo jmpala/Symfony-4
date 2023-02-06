@@ -1,4 +1,7 @@
 {
+    "babdev/pagerfanta-bundle": {
+        "version": "v3.6.1"
+    },
     "behat/transliterator": {
         "version": "v1.3.0"
     },
